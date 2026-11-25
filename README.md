@@ -15,7 +15,61 @@ To implement univariate Linear Regression to fit a straight line using least squ
 6.	Obtain the straight line equation Y=mX+b and plot the scatterplot.
 ## Program
 ```
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import datasets, linear_model
 
+# Load the dataset
+data = datasets.load_diabetes()
+X = data.data
+y = data.target
+
+# Split training and testing data
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.4, random_state=1
+)
+
+# Create linear regression object
+reg = linear_model.LinearRegression()
+
+# Train the model
+reg.fit(X_train, y_train)
+
+# Regression coefficients
+print("Coefficients:", reg.coef_)
+
+# Variance score
+print("Variance score: {}".format(reg.score(X_test, y_test)))
+
+# Plot residual errors
+plt.style.use('fivethirtyeight')
+
+# Training data residuals
+plt.scatter(
+    reg.predict(X_train),
+    reg.predict(X_train) - y_train,
+    color="green", s=10, label="Train data"
+)
+
+# Testing data residuals
+plt.scatter(
+    reg.predict(X_test),
+    reg.predict(X_test) - y_test,
+    color="blue", s=10, label="Test data"
+)
+
+# Zero residual error line
+plt.hlines(y=0, xmin=0, xmax=500, linewidth=2)
+
+# Legend and title
+plt.legend(loc="upper right")
+plt.title("Residual errors")
+plt.xlabel("Predicted values")
+plt.ylabel("Residuals")
+
+plt.show()
 
 
 
@@ -23,10 +77,7 @@ To implement univariate Linear Regression to fit a straight line using least squ
 
 ```
 ## Output
-</br>
-</br>
-</br>
-</br>
+<img width="837" height="611" alt="image" src="https://github.com/user-attachments/assets/afa9d1c7-ee7c-4986-91f3-56be4de524d2" />
 
 ## Result
 Thus the univariate Linear Regression was implemented to fit a straight line using least squares.
